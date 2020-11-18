@@ -1,5 +1,4 @@
 import argparse
-import math
 
 
 class Cluster:
@@ -18,7 +17,7 @@ class Cluster:
             sum += difference_sqrt
 
         temp = "{result:.2f}"
-        return float(temp.format(result=float(math.sqrt(sum))))
+        return float(temp.format(result=float(sum)))
 
     def update_cluster(self):
         d = len(self.centroid)
