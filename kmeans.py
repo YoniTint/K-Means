@@ -75,8 +75,9 @@ class Cluster:
     @classmethod
     def are_not_equal(cls, last_calculated_centroids, new_averaged_centroids):
         for i in range(0, len(last_calculated_centroids)):
-            if last_calculated_centroids != new_averaged_centroids[i]:
-                return False
+            for j in range(0, len(last_calculated_centroids[0])):
+                if last_calculated_centroids[i][j] != new_averaged_centroids[i][j]:
+                    return False
         return True
 
 
