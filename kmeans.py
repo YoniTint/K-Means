@@ -16,8 +16,7 @@ class Cluster:
             difference_sqrt = float(difference*difference)
             sum += difference_sqrt
 
-        temp = "{result:.2f}"
-        return float(temp.format(result=float(sum)))
+        return sum
 
     def update_cluster(self):
         d = len(self.centroid)
@@ -28,8 +27,7 @@ class Cluster:
             for vector in self.group:
                 sum += vector[i]
             sum /= len(self.group)
-            temp = "{result:.2f}"
-            result_vector.append(float(temp.format(result=sum)))
+            result_vector.append(sum)
 
         self.centroid = result_vector
         self.group = []
@@ -63,12 +61,16 @@ class Cluster:
 
         for i in range(0, k - 1):
             for j in range(0, d - 1):
-                print(centroids[i][j], end=', ')
-            print(centroids[i][d - 1])
+                temp = "{result:.2f}"
+                print(float(temp.format(result=centroids[i][j])), end=', ')
+            temp_2 = "{result_2:.2f}"
+            print(float(temp_2.format(result_2=centroids[i][d - 1])))
 
         for j in range(0, d - 1):
-            print(centroids[k - 1][j], end=', ')
-        print(centroids[k - 1][d - 1], end='')
+            temp = "{result:.2f}"
+            print(float(temp.format(result=centroids[k - 1][j])), end=', ')
+        temp_2 = "{result_2:.2f}"
+        print(float(temp_2.format(result_2=centroids[k - 1][d - 1])), end='')
 
     @classmethod
     def are_not_equal(cls, last_calculated_centroids, new_averaged_centroids):
