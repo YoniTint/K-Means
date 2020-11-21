@@ -19,15 +19,18 @@ class Cluster:
         return sum
 
     def update_cluster(self):
-        d = len(self.centroid)
         result_vector = []
 
-        for i in range(0, d):
-            sum = float(0)
-            for vector in self.group:
-                sum += vector[i]
-            sum /= len(self.group)
-            result_vector.append(sum)
+        if len(self.group) == 0:
+            result_vector = self.centroid
+        else:
+            d = len(self.centroid)
+            for i in range(0, d):
+                sum = float(0)
+                for vector in self.group:
+                    sum += vector[i]
+                sum /= len(self.group)
+                result_vector.append(sum)
 
         self.centroid = result_vector
         self.group = []
@@ -77,8 +80,8 @@ class Cluster:
         for i in range(0, len(last_calculated_centroids)):
             for j in range(0, len(last_calculated_centroids[0])):
                 if last_calculated_centroids[i][j] != new_averaged_centroids[i][j]:
-                    return False
-        return True
+                    return True
+        return False
 
 
 # Main
