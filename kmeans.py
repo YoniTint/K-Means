@@ -97,43 +97,46 @@ N = args.N
 d = args.d
 MAX_ITER = args.MAX_ITER
 
-# Initializing observations from input
-observations = []
+if (d > 0 and N > 0 and K > 0 and N >= K):
 
-while True:
-    try:
-        observations.append(input().split(','))
-    except EOFError:
-        break
+    # Initializing observations from input
+    observations = []
 
-for vector in range(0, N):
-    for coordinate in range(0, d):
-        observations[vector][coordinate] = float(observations[vector][coordinate])
+    while True:
+        try:
+            observations.append(input().split(','))
+        except EOFError:
+            break
 
-# initializing K clusters objects
-clusters = Cluster.initialize_clusters(observations, K)
+    for vector in range(0, N):
+        for coordinate in range(0, d):
+            observations[vector][coordinate] = float(observations[vector][coordinate])
 
-# storing the first centroids to check later if changed or not
-last_calculated_centroids = [cluster.centroid for cluster in clusters]
+    # initializing K clusters objects
+    clusters = Cluster.initialize_clusters(observations, K)
 
-# do the block below until centroids didn't change or went MAX_ITER times
-for iteration in range(0, MAX_ITER):
-    # start to map the observations to each cluster
-    Cluster.map_observations_to_clusters(observations, clusters)
+    # storing the first centroids to check later if changed or not
+    last_calculated_centroids = [cluster.centroid for cluster in clusters]
 
-    # updating each cluster with average centroid and cleaning group
-    for i in range(0, K):
-        clusters[i].update_cluster()
+    # do the block below until centroids didn't change or went MAX_ITER times
+    for iteration in range(0, MAX_ITER):
+        # start to map the observations to each cluster
+        Cluster.map_observations_to_clusters(observations, clusters)
 
-    new_averaged_centroids = [cluster.centroid for cluster in clusters]
+        # updating each cluster with average centroid and cleaning group
+        for i in range(0, K):
+            clusters[i].update_cluster()
 
-    if Cluster.are_not_equal(last_calculated_centroids, new_averaged_centroids):
-        last_calculated_centroids = new_averaged_centroids
-    else:
-        Cluster.print_centroids(new_averaged_centroids)
-        break
+        new_averaged_centroids = [cluster.centroid for cluster in clusters]
 
-    if iteration == MAX_ITER - 1:
-        Cluster.print_centroids(new_averaged_centroids)
+        if Cluster.are_not_equal(last_calculated_centroids, new_averaged_centroids):
+            last_calculated_centroids = new_averaged_centroids
+        else:
+            Cluster.print_centroids(new_averaged_centroids)
+            break
 
+        if iteration == MAX_ITER - 1:
+            Cluster.print_centroids(new_averaged_centroids)
 
+else:
+    raise Exception
